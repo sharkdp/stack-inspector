@@ -1,6 +1,6 @@
 # stack-inspector
 
-A gdb command to inspect the stack for large objects
+A `gdb` command to inspect the stack for large objects
 
 ## how to
 
