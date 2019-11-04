@@ -57,7 +57,7 @@ int main() {
 When running `stack-inspector` from `gdb`, we get this output:
 ```
 (gdb) run
-Starting program: /home/shark/Dropbox/Informatik/python/stack-inspector/a.out 
+Starting program: a.out 
 
 Program received signal SIGSEGV, Segmentation fault.
 0x00005555555551f4 in bar (
