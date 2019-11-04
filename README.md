@@ -45,13 +45,13 @@ void foo(int foo_param) {
 
   // Some data on the heap which will only show up
   // as the size of the control block:
-  std::vector<char> main_vector(1024, 'x');
+  std::vector<char> foo_vector(1024, 'x');
 
   bar(foo_param, foo_local[0]);
 }
 
 int main() {
-  const char* test = "hello";
+  const char* main_test = "hello";
 
   foo(42);
 }
@@ -86,12 +86,12 @@ stack-inspector:
   #1    foo(int) @ main.cpp:30
 
                128   foo_local :: std::array<double, 16>
-                24   main_vector :: std::vector<char, std::allocator<char> >
+                24   foo_vector :: std::vector<char, std::allocator<char> >
                  4   foo_param :: int
                  1   foo_static :: char
 
   #2    main() @ main.cpp:36
 
-                 8   test :: const char *
+                 8   main_test :: const char *
 
 ```
