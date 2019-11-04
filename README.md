@@ -6,7 +6,7 @@ A gdb command to inspect the stack for large objects
 
 From within `gdb`, simply run:
 ```gdb
-source ./stack_inspector.py
+source stack-inspector.py
 
 # navigate to a certain stack frame (e.g. run until your stack overflows)
 

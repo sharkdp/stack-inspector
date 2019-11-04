@@ -40,6 +40,8 @@ def analyze_frame(frame_nr, frame):
 
 
 class StackVisualizer(gdb.Command):
+    """Inspect the stack for large objects"""
+
     def __init__(self):
         super().__init__("stack-inspector", gdb.COMMAND_STACK)
 
