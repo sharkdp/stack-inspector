@@ -14,8 +14,15 @@ def analyze_frame(frame_nr, frame):
             filename=info.symtab.filename,
             line=info.line,
             function=frame.function().name))
+    else:
+        print("  #{frame_nr:<4} Could not retrieve symbol table\n".format(frame_nr=frame_nr))
+        return
 
-    block = frame.block()
+    try:
+        block = frame.block()
+    except RuntimeError:
+        print("Could not retrieve block information")
+        return
 
     symbols = {}
     while block:
@@ -35,8 +42,10 @@ def analyze_frame(frame_nr, frame):
                         size=size,
                         name=name,
                         typename=typename))
-            print()
+
         block = block.superblock
+
+    print()
 
 
 class StackVisualizer(gdb.Command):
