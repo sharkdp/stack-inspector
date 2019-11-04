@@ -4,12 +4,9 @@ A gdb command to inspect the stack for large objects
 
 ## how to
 
-From within `gdb`, simply run:
+Use `gdb` to navigate to a certain stack frame (run until your stack overflows or set a breakpoint somewhere). Then, simply run:
 ```gdb
 source stack-inspector.py
-
-# navigate to a certain stack frame (e.g. run until your stack overflows)
-
 stack-inspector
 ```
 
@@ -57,7 +54,7 @@ int main() {
 }
 ```
 
-Debugging this with stack-inspector:
+When running `stack-inspector` from `gdb`, we get this output:
 ```
 (gdb) run
 Starting program: /home/shark/Dropbox/Informatik/python/stack-inspector/a.out 
