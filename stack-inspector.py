@@ -33,17 +33,17 @@ def analyze_frame(frame_nr, frame):
                         symbols[symbol.name] = \
                             Symbol(symbol.type.sizeof, symbol.type)
 
-            symbols = OrderedDict(sorted(symbols.items(),
-                                         key=lambda s: s[1].size,
-                                         reverse=True))
-
-            for name, (size, typename) in symbols.items():
-                print("    {size:>14,}   {name} :: {typename}".format(
-                        size=size,
-                        name=name,
-                        typename=typename))
-
         block = block.superblock
+
+    symbols = OrderedDict(sorted(symbols.items(),
+                                 key=lambda s: s[1].size,
+                                 reverse=True))
+
+    for name, (size, typename) in symbols.items():
+        print("    {size:>14,}   {name} :: {typename}".format(
+                size=size,
+                name=name,
+                typename=typename))
 
     print()
 
