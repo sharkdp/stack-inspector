@@ -77,9 +77,14 @@ class StackVisualizer(gdb.Command):
         super().__init__("stack-inspector", gdb.COMMAND_STACK)
 
     def invoke(self, arg, from_tty):
+        try:
+            frame = gdb.selected_frame()
+        except gdb.error:
+            print("[stack-inspector] could not retrieve frame information (no stack).")
+            return
+
         print("\nstack-inspector:\n")
         backtrace = []
-        frame = gdb.selected_frame()
 
         while frame:
             backtrace.append(frame)
