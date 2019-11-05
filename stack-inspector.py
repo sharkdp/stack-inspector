@@ -2,6 +2,13 @@ import gdb
 from collections import OrderedDict, namedtuple
 
 
+ANSI_BOLD = "\x1b[1m"
+ANSI_GREEN = "\x1b[32m"
+ANSI_MAGENTA = "\x1b[35m"
+ANSI_CYAN = "\x1b[36m"
+ANSI_RESET = "\x1b[0m"
+
+
 Symbol = namedtuple('Symbol', ['size', 'typename'])
 
 
@@ -9,13 +16,22 @@ def analyze_frame(frame_nr, frame):
     info = frame.find_sal()
 
     if info.symtab:
-        print("  #{frame_nr:<4} {function} @ {filename}:{line}\n".format(
-            frame_nr=frame_nr,
-            filename=info.symtab.filename,
-            line=info.line,
-            function=frame.function().name))
+        print("  {bold}#{frame_nr:<3}{reset} "
+              "{green}{function}{reset}"
+              " @ "
+              "{filename}:{line}\n".format(
+                frame_nr=frame_nr,
+                filename=info.symtab.filename,
+                line=info.line,
+                function=frame.function().name,
+                bold=ANSI_BOLD,
+                green=ANSI_GREEN,
+                reset=ANSI_RESET))
     else:
-        print("  #{frame_nr:<4} Could not retrieve symbol table\n".format(frame_nr=frame_nr))
+        print("  {bold}#{frame_nr:<3}{reset} Could not retrieve symbol table\n".format(
+            frame_nr=frame_nr,
+            green=ANSI_GREEN,
+            reset=ANSI_RESET))
         return
 
     try:
@@ -40,10 +56,15 @@ def analyze_frame(frame_nr, frame):
                                  reverse=True))
 
     for name, (size, typename) in symbols.items():
-        print("    {size:>14,}   {name} :: {typename}".format(
+        print("    {bold}{size:>14,}{reset}   {name} ({cyan}{typename}{reset})".format(
                 size=size,
                 name=name,
-                typename=typename))
+                typename=typename,
+                cyan=ANSI_CYAN,
+                magenta=ANSI_MAGENTA,
+                bold=ANSI_BOLD,
+                reset=ANSI_RESET
+                ))
 
     print()
 
