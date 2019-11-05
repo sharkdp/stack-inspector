@@ -86,13 +86,13 @@ class StackVisualizer(gdb.Command):
             print("[stack-inspector] could not retrieve frame information (no stack).")
             return
 
-        print("\nstack-inspector:\n")
         backtrace = []
 
         while frame:
             backtrace.append(frame)
             frame = frame.older()
 
+        print()
         for frame_nr, frame in enumerate(backtrace):
             analyze_frame(frame_nr, frame)
 
