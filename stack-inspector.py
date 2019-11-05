@@ -28,8 +28,9 @@ def analyze_frame(frame_nr, frame):
                 green=ANSI_GREEN,
                 reset=ANSI_RESET))
     else:
-        print("  {bold}#{frame_nr:<3}{reset} Could not retrieve symbol table\n".format(
+        print("  {bold}#{frame_nr:<3}{reset} Could not retrieve frame information\n".format(
             frame_nr=frame_nr,
+            bold=ANSI_BOLD,
             green=ANSI_GREEN,
             reset=ANSI_RESET))
         return
