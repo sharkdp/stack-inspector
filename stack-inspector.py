@@ -48,7 +48,8 @@ def analyze_frame(frame_nr, frame):
                 # We only show symbols which are on the call stack
                 # - function arguments
                 # - local variables (which need frame information, no static variables)
-                if symbol.is_argument or (symbol.is_variable and symbol.needs_frame):
+                if symbol.is_argument or \
+                        (symbol.is_variable and symbol.addr_class != gdb.SYMBOL_LOC_STATIC):
                     if symbol.name not in symbols:
                         symbols[symbol.name] = Symbol(symbol.type.sizeof, symbol.type)
 
