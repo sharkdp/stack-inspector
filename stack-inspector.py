@@ -45,10 +45,12 @@ def analyze_frame(frame_nr, frame):
     while block:
         if not (block.is_global or block.is_static):
             for symbol in block:
-                if symbol.is_argument or symbol.is_variable:
+                # We only show symbols which are on the call stack
+                # - function arguments
+                # - local variables (which need frame information, no static variables)
+                if symbol.is_argument or (symbol.is_variable and symbol.needs_frame):
                     if symbol.name not in symbols:
-                        symbols[symbol.name] = \
-                            Symbol(symbol.type.sizeof, symbol.type)
+                        symbols[symbol.name] = Symbol(symbol.type.sizeof, symbol.type)
 
         block = block.superblock
 
