@@ -77,7 +77,7 @@ class StackVisualizer(gdb.Command):
     """Inspect the stack for large objects"""
 
     def __init__(self):
-        super().__init__("stack-inspector", gdb.COMMAND_STACK)
+        super(StackVisualizer, self).__init__("stack-inspector", gdb.COMMAND_STACK)
 
     def invoke(self, arg, from_tty):
         try:
