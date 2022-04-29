@@ -16,6 +16,10 @@ def analyze_frame(frame_nr, frame):
     info = frame.find_sal()
 
     if info.symtab:
+        if frame.function():
+            function_name = frame.function().name
+        else:
+            function_name = "?"
         print("  {bold}#{frame_nr:<3}{reset} "
               "{green}{function}{reset}"
               " @ "
@@ -23,7 +27,7 @@ def analyze_frame(frame_nr, frame):
                 frame_nr=frame_nr,
                 filename=info.symtab.filename,
                 line=info.line,
-                function=frame.function().name,
+                function=function_name,
                 bold=ANSI_BOLD,
                 green=ANSI_GREEN,
                 reset=ANSI_RESET))
@@ -59,6 +63,7 @@ def analyze_frame(frame_nr, frame):
                                  key=lambda s: s[1].size,
                                  reverse=True))
 
+    total_size = 0
     for name, (size, typename) in symbols.items():
         print("    {bold}{size:>14,}{reset}   {name} ({cyan}{typename}{reset})".format(
                 size=size,
@@ -69,8 +74,12 @@ def analyze_frame(frame_nr, frame):
                 bold=ANSI_BOLD,
                 reset=ANSI_RESET
                 ))
+        if size:
+            total_size += size
 
     print()
+
+    return total_size
 
 
 class StackVisualizer(gdb.Command):
@@ -93,8 +102,13 @@ class StackVisualizer(gdb.Command):
             frame = frame.older()
 
         print()
+        total_size = 0
         for frame_nr, frame in enumerate(backtrace):
-            analyze_frame(frame_nr, frame)
+            frame_size = analyze_frame(frame_nr, frame)
+            if frame_size:
+                total_size += frame_size
+
+        print("Total size: {size:,}".format(size=total_size))
 
 
 StackVisualizer()
