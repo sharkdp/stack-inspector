@@ -45,6 +45,11 @@ def analyze_frame(frame_nr, frame):
         print("Could not retrieve block information")
         return
 
+    if frame.type() == gdb.INLINE_FRAME:
+        print("    Frame is inlined.")
+        print()
+        return
+
     symbols = {}
     while block:
         if not (block.is_global or block.is_static):
